@@ -1,0 +1,88 @@
+<div id="editor">
+    <!-- Editor Modal Dialog -->
+    <div class="modal" id="editor-modal" tabindex="-1" role="dialog" aria-labelledby="editor-modal-lbl" aria-hidden="true">
+    </div>
+    <!-- Editor Modal Dialog End -->
+    <br />
+    <div class="row">
+        <!-- File button -->
+        <div class="dropdown col-xs-6 col-sm-2 col-md-2 col-lg-2" id="editor-file">
+            <a href="#" class="btn btn-default dropdown-toggle btn-block" type="button" id="editor-file-btn" data-toggle="dropdown" aria-expanded="true">
+                <span id="editor-file-lbl"><i class="fa fa-file fa-fw"></i>File</span>
+                <span><i class="fa fa-caret-down fa-fw"></i></span>
+            </a>
+            <ul class="dropdown-menu scrollable col-xs-12 col-sm-12 col-md-12 col-lg-12" role="menu" aria-labelledby="editor-file-btn" id="editor-file-opts">
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="#" data-val="new">New</a></li>
+                <li role="presentation" class="disabled"><a role="menuitem" tabindex="-1" href="#" data-val="save">Save</a></li>
+                <li role="presentation" class="divider"></li>
+                <li role="presentation" class="disabled"><a role="menuitem" tabindex="-1" href="#" data-val="exit">Exit</a></li>
+            </ul>
+        </div>
+        <!-- File button End -->
+        <!-- Language button -->
+        <div class="dropdown col-xs-6 col-sm-6 col-md-6 col-lg-6" id="editor-lang">
+            <a href="#" class="btn btn-default dropdown-toggle btn-block" type="button" id="editor-lang-btn" data-toggle="dropdown" aria-expanded="true">
+                <span id="editor-lang-lbl" data-val="txt">Plain Text (.txt)</span>
+                <span><i class="fa fa-caret-down fa-fw"></i></span>
+            </a>
+            <ul class="dropdown-menu scrollable col-xs-12 col-sm-12 col-md-12 col-lg-12" role="menu" aria-labelledby="editor-lang-btn" id="editor-lang-opts">
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="#" data-val="txt">Plain Text (.txt)</a></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="#" data-val="html">HTML (.html)</a></li>
+                <!--li role="presentation" class="disabled"><a role="menuitem" tabindex="-1" href="#">CSS (.css)</a></li>
+                <li role="presentation" class="disabled"><a role="menuitem" tabindex="-1" href="#">Javascript (.js)</a></li>
+                <li role="presentation" class="disabled"><a role="menuitem" tabindex="-1" href="#">PHP (.php)</a></li-->
+            </ul>
+        </div>
+        <!-- Language button End -->
+        <!-- Edit button -->
+        <div class="col-xs-6 col-sm-2 col-md-2 col-lg-2" id="editor-edit">
+            <div class="btn-group btn-block">
+                <a href="#" type="button" class="btn btn-success col-xs-8 col-sm-8 col-md-8 col-lg-8" id="editor-edit-lbl">
+                    <span><i class="fa fa-fw fa-pencil-square-o"></i>Edit</span>
+                </a>
+                <a href="#" type="button" class="btn btn-success dropdown-toggle col-xs-4 col-sm-4 col-md-4 col-lg-4" data-toggle="dropdown" id="editor-edit-btn" aria-expanded="true">
+                    <span><i class="fa fa-caret-down fa-fw"></i></span>
+                </a>
+                <ul class="dropdown-menu scrollable col-xs-12 col-sm-12 col-md-12 col-lg-12" role="menu" aria-labelledby="editor-edit-btn" id="editor-edit-opts">
+                    <li role="presentation" class="disabled"><a role="menuitem" tabindex="-1" href="#" data-val="undo">Undo</a></li>
+                    <li role="presentation" class="disabled"><a role="menuitem" tabindex="-1" href="#" data-val="redo">Redo</a></li>
+                    <li role="presentation" class="divider hidden"></li>
+                </ul>
+            </div>
+        </div>
+        <!-- Edit button End -->
+        <!-- Help button -->
+        <div class="col-xs-6 col-sm-2 col-md-2 col-lg-2" id="editor-help">
+            <a href="#" type="button" class="btn btn-default btn-block" id="editor-help-btn"><i class="fa fa-fw fa-question-circle"></i>Help</a>
+        </div>
+        <!-- Help button End -->
+    </div>
+    <br />
+    <div class="row">
+        <!-- Textarea -->
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="editor-textarea">
+            <!-- Textarea Line No -->
+            <textarea class="text-center col-xs-3 col-sm-2 col-md-1 col-lg-1" id="editor-textarea-lineno" disabled></textarea>
+            <!-- Textarea Body -->
+            <textarea class="col-xs-9 col-sm-10 col-md-11 col-lg-11" id="editor-textarea-body" autofocus></textarea>
+        </div>
+    </div>
+    <div class="row">
+        <span class="text-center col-xs-12 col-sm-12 col-md-12 col-lg-12" id="editor-textarea-interim"></span>
+    </div>
+    <br />
+    <div class="row">
+        <!-- Mic -->
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+            <a href="#" id="editor-mic"><i class="fa fa-microphone fa-fw fa-5x" id="editor-mic-icon"></i></a>
+        </div>
+    </div>
+    <br />
+</div>
+<div class="row">
+    <!-- Unsupported Alert -->
+    <br><br>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center hidden" id="unsupported">
+        <div class="alert alert-danger" role="alert" id="message">Browser doesn't support speech recognition. Try Chrome.</div>
+    </div>
+</div>
