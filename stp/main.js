@@ -308,12 +308,12 @@ var helpStructure = '<div class="container-fluid">'+
                         '</div>'+
                         '<div class="row">'+
                             '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">'+
-                                "<span>Src Code Page : <a href='https://bitbucket.org/dvenkatsagar/speech-editor'>https://bitbucket.org/dvenkatsagar/speech-editor</a></span>"+
+                                "<span>Src Code Page : <a href='https://gitlab.com/dvenkatsagar/speech-editor'>https://gitlab.com/dvenkatsagar/speech-editor</a></span>"+
                             '</div>'+
                         '</div>'+
                         '<div class="row">'+
                             '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">'+
-                                "<span>Src Code : <a href='https://bitbucket.org/dvenkatsagar/speech-editor/get/develop.zip'>Download</a></span>"+
+                                "<span>Src Code : <a href='https://gitlab.com/dvenkatsagar/speech-editor/repository/archive.zip'>Download</a></span>"+
                             '</div>'+
                         '</div>'+
                     '</div>';
