@@ -21,13 +21,12 @@
 </head>
 <body>
 <div id="container"></div>
-<script type="text/javascript" src="./js/awe-loader.js"></script>
+<script type="text/javascript" src="/js/awe-loader.js"></script>
 <script type="text/javascript">
   window.addEventListener('load', function() {
     window.awe.init({
       device_type: awe.AUTO_DETECT_DEVICE_TYPE,
       settings: {
-				debug: true,
       	container_id: 'container',
         default_camera_position: { x:0, y:0, z:0 },
         default_lights:[
@@ -43,14 +42,11 @@
           {
             capabilities: ['gum','webgl'],
             files: [
-              [ './js/awe-standard-dependencies.js', './js/awe-standard-custom.js'],
-              './js/awe-jsartoolkit-dependencies.js',
-              './js/awe.marker_ar.js',
+              '/js/awe-standard-dependencies.js', '/js/awe-standard-custom.js','/js/awe-jsartoolkit-dependencies.js','/js/awe-marker_ar.js'
             ],
             success: function() {
 							awe.setup_scene();
-							var faces = {up: [], down: [], left: [], right:[], front:[], back:[]};
-							awe.pois.add({ id:'poi_0', position: { x:0, y:0, z:10000 }, visible: false });
+							awe.pois.add({ id:'poi_0', position: { x:0, y:0, z:1000 }, visible: false });
 
 							/* order to add materials: x+,x-,y+,y-,z+,z-*/
 							// [0xeeeeee,0xeeeeee,0xeeeeee,0xeeeeee,0xeeeeee,0xeeeeee]
@@ -101,7 +97,7 @@
 									materials['cubit_'+i] = new THREE.MeshFaceMaterial(materialArrays['cubit_'+i]);
 								}
 							}
-							console.log(materials['cubit_26']);
+
 							var cubeIndex = 0;
 							for (var k = -1; k <= 1; k++){
 								for (var j = -1; j <= 1; j++){
@@ -111,15 +107,11 @@
 											geometry: { shape: 'cube', x:20, y:20, z:20 },
 											position: { x:i*25, y: (j*25)+25, z:k*25 },
 											material: { type: 'custom', custom: materials['cubit_'+cubeIndex] }
-											//material:{ type: 'phong', color: 0xFFFFFF },
-											//texture: { path: 'awe_by_buildAR.png' },
 										}, { poi_id: 'poi_0'});
 										cubeIndex++;
 									}
 								}
 							}
-
-							//var projection = awe.projections.view('cubit_0');
 
 			        awe.events.add([{
 								id: 'ar_tracking_marker',
