@@ -899,10 +899,8 @@
       if (!BODY.overdraw) {
         BODY.overdraw = true;
       }
+      material = new THREE.MeshBasicMaterial(BODY);
       switch(type) {
-        case 'basic':
-          material = new THREE.MeshBasicMaterial(BODY);  
-          break;
         case 'phong':
           if (!BODY.shading) {
             BODY.shading = THREE.SmoothShading;
