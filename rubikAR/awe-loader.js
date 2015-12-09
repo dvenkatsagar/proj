@@ -29,7 +29,7 @@
   ------------------
 
     It's a simple datastore template that makes it easy to store, manage and
-    extend collections of javascript object in a consistent way. 
+    extend collections of javascript object in a consistent way.
 
     Trust me, it's funkier than that sounds! 8)
 
@@ -70,7 +70,7 @@
     either an object or an array of 0 or more objects.
 
 
-  How do you use awe_v8? 
+  How do you use awe_v8?
   ----------------------
 
   // create a awe_v8 datastore
@@ -91,7 +91,7 @@
       some_data: "blahdeblah"
     },
     {
-      new_param: 99, 
+      new_param: 99,
       id: "test3",
       some_data: "hrmok"
     },
@@ -99,11 +99,11 @@
 
   // list all objects currently in your datastore
   console.log("list all objects (return all objects)");
-  my_datastore.list(); 
+  my_datastore.list();
 
   // list all objects in SOAPjr format (see separate documentation for SOAPjr API)
   console.log("list all objects (return all objects in SOAPjr)");
-  my_datastore.list({}, { output_format:"soapjr" }); 
+  my_datastore.list({}, { output_format:"soapjr" });
 
   // view one object
   console.log("view an object (return one object)");
@@ -115,9 +115,9 @@
   console.log("update an object (return updated fields)");
   my_datastore.update({
     data: {
-      new_param: 34, 
+      new_param: 34,
       some_data: "new_data",
-    }, 
+    },
     where: {
       id: "test",
     }
@@ -125,15 +125,15 @@
 
   // search for objects that fuzzy match a pattern
   console.log("list fuzzy matches (return roughly matching objects)");
-  my_datastore.list({ id: "test" }, { limit: 10 }); 
+  my_datastore.list({ id: "test" }, { limit: 10 });
 
   // search for objects that exactly match a pattern
   console.log("list exact matches (return exactly matching objects)");
-  my_datastore.list({ exact: { id: "test2" } }); 
+  my_datastore.list({ exact: { id: "test2" } });
 
   // delete one object
   console.log("delete an object (return deleted ids)");
-  my_datastore.delete({ id: "test2" }); 
+  my_datastore.delete({ id: "test2" });
 
   // report metadata about this datastore
   console.log("report overview info (return a summary)");
@@ -189,7 +189,7 @@ function awe_v8() {
         if (errors !== undefined && Object.keys(errors).length) {
           for (var i in errors) {
             if (Object.keys(errors[i]).length) {
-              
+
               return_object.HEAD.errors[i] = errors[i];
             }
           }
@@ -213,7 +213,7 @@ function awe_v8() {
     if (data[io[ID_FIELD]] !== undefined) {
       errors.BODY[ID_FIELD] = {
         code: 500,
-        message: ID_FIELD+" already exists ("+io[ID_FIELD]+")", 
+        message: ID_FIELD+" already exists ("+io[ID_FIELD]+")",
       };
       throw ID_FIELD+" already exists ("+io[ID_FIELD]+")";
     }
@@ -222,7 +222,7 @@ function awe_v8() {
       return io[ID_FIELD];
     }
   };
-  function awe_v8_template() { 
+  function awe_v8_template() {
     var data = {};
     if (V8_CONFIG.debug !== undefined) {
       this.debug = V8_CONFIG.debug;
@@ -239,7 +239,7 @@ function awe_v8() {
     this.get_data = function(){
       return data;
     }
-    
+
     this.constructor.prototype.list = function(BODY, HEAD){
       if (BODY === undefined) { BODY = {}; }
       if (HEAD === undefined) { HEAD = {}; }
@@ -256,7 +256,7 @@ function awe_v8() {
         var order_by = ID_FIELD;
         var order_type = "alphabetic";
         var order_direction = "asc";
-        var data_array = [];  
+        var data_array = [];
         for (var i in data) {
           data_array.push(data[i]);
         }
@@ -335,10 +335,10 @@ function awe_v8() {
           else {
             if (A[order_by] !== undefined && typeof(A[order_by]) == "number") {
               a = A[order_by];
-            } 
+            }
             if (B[order_by] !== undefined && typeof(B[order_by]) == "number") {
               b = B[order_by];
-            } 
+            }
             if (order_direction == "asc") {
               if (a == undefined && b == undefined) {
                 return 0
@@ -350,7 +350,7 @@ function awe_v8() {
                 return -1;
               }
               else {
-                return a-b; 
+                return a-b;
               }
             }
             else {
@@ -364,7 +364,7 @@ function awe_v8() {
                 return -1;
               }
               else {
-                return b-a; 
+                return b-a;
               }
             }
           }
@@ -399,7 +399,7 @@ function awe_v8() {
               }
               if (a !== undefined && b !== undefined) {
                 var r = a.match(b);
-                if (r == undefined) { 
+                if (r == undefined) {
                   match = 0;
                 }
               }
@@ -530,7 +530,7 @@ function awe_v8() {
         else {
           errors.BODY.id = {
             code: 500,
-            message: BODY.id+" does not exist", 
+            message: BODY.id+" does not exist",
           };
           throw BODY.id+" does not exist";
         }
@@ -556,21 +556,21 @@ function awe_v8() {
         if (BODY == undefined) {
           errors.BODY = {
             code: 500,
-            message: "missing BODY object", 
+            message: "missing BODY object",
           };
           throw "missing BODY object";
         }
         if (BODY.data == undefined) {
           errors.BODY.data = {
             code: 500,
-            message: "missing 'data' clause in BODY object", 
+            message: "missing 'data' clause in BODY object",
           };
           throw "missing 'data' clause in BODY object";
         }
         if (BODY.where == undefined) {
           errors.BODY.where = {
             code: 500,
-            message: "missing 'where' clause in BODY object", 
+            message: "missing 'where' clause in BODY object",
           };
           throw "missing 'where' clause in BODY object";
         }
@@ -579,7 +579,7 @@ function awe_v8() {
             if (data[BODY.where[ID_FIELD]] == undefined) {
               errors.BODY[BODY.where[ID_FIELD]] = {
                 code: 500,
-                message: ID_FIELD+" doesn't exist ("+BODY.where[ID_FIELD]+")", 
+                message: ID_FIELD+" doesn't exist ("+BODY.where[ID_FIELD]+")",
               };
               throw ID_FIELD+" doesn't exist ("+BODY.where[ID_FIELD]+")";
             }
@@ -598,7 +598,7 @@ function awe_v8() {
         else {
           errors.BODY.where = {
             code: 500,
-            message: "where."+ID_FIELD+" required", 
+            message: "where."+ID_FIELD+" required",
           };
           throw "where."+ID_FIELD+" required";
         }
@@ -629,7 +629,7 @@ function awe_v8() {
           else {
             errors.BODY.id = {
               code: 500,
-              message: BODY.id+" does not exist", 
+              message: BODY.id+" does not exist",
             };
             throw BODY.id+" does not exist";
           }
@@ -643,7 +643,7 @@ function awe_v8() {
             else {
               errors.BODY[BODY.id[id]] = {
                 code: 500,
-                message: BODY.id[id]+" does not exist" 
+                message: BODY.id[id]+" does not exist"
               };
               throw BODY.id[id]+" does not exist";
             }
@@ -682,7 +682,7 @@ function awe_v8() {
         if (data == undefined) {
           errors.HEAD.data = {
             code: 500,
-            message: "internal data invalid" 
+            message: "internal data invalid"
           };
           throw "internal data invalid";
         }
@@ -725,7 +725,7 @@ function awe_v8() {
         }
       }
     };
-    
+
     this.constructor.prototype.toString = function() {
     	return 'awe_v8_object'
     };
@@ -741,7 +741,7 @@ function awe_v8() {
 
   The MIT License
 
-  Copyright (c) 2013 Rob Manson & Malgorzata Wierzbicka, http://buildAR.com. 
+  Copyright (c) 2013 Rob Manson & Malgorzata Wierzbicka, http://buildAR.com.
   All rights reserved.
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -776,7 +776,7 @@ function awe_v8() {
       this.constructor.prototype.settings = new awe_v8();
       // set default settings
       // NOTE: override this in your code to customize how you want your awe.js app to behave
-      
+
       this.settings.add([
         {
           id: 'debug',
@@ -852,7 +852,7 @@ function awe_v8() {
       this.constructor.prototype.events.delete = function(BODY, HEAD) {
         if (!BODY) { BODY = {}; }
         if (!HEAD) { HEAD = {}; }
-        
+
         if (typeof BODY == 'string' || typeof BODY == 'number') {
           event_handler = this_awe.events.view(BODY);
           BODY = { id: BODY };
@@ -871,7 +871,7 @@ function awe_v8() {
       this.constructor.prototype.plugins = new awe_v8();
       this.constructor.prototype.plugins.add = function(BODY, HEAD) {
         if (!BODY) { BODY = {}; }
-        if (!HEAD) { HEAD = {}; }  
+        if (!HEAD) { HEAD = {}; }
         try {
           var result = this.constructor.prototype.add.call(this, BODY, HEAD); // super
           if (initialized) {
@@ -912,7 +912,7 @@ function awe_v8() {
         }
         return this.constructor.prototype.delete.call(this, BODY, HEAD); // super
       }
-    
+
       this.constructor.prototype.error_handler = function(e, debug) {
         if (debug || this.debug) {
           if (e.code && e.message) {
@@ -932,15 +932,15 @@ function awe_v8() {
           }
         }
       };
-      
+
       this.constructor.prototype.init = function(io) {
         if (initialized) {
           console.log('awe was already initialized.');
           return;
         }
         if (!io) { io = {}; }
-        
-        
+
+
         if (io.settings) {
           for (var key in io.settings) {
             try {
@@ -962,9 +962,9 @@ function awe_v8() {
               }
             }
             catch(e) { /* TODO */ }
-          }  
+          }
         }
-        
+
         if (this_awe.settings.view('debug')) {
           this.debug = this_awe.settings.view('debug');
         }
@@ -984,7 +984,7 @@ function awe_v8() {
             var ua = navigator.userAgent;
             if (ua.match(/ipad/i)) {
               device_type = 'ipad';
-            } 
+            }
             else if (ua.match(/iphone/i)) {
               device_type = 'iphone';
             }
@@ -995,13 +995,13 @@ function awe_v8() {
             else if (ua.match(/(win|os x|linux)/i)) {
               device_type = 'pc';
             }
-            this_awe.settings.update({ 
-              data: { 
-                value: device_type 
-              }, 
-              where: { 
-                id: 'device_type' 
-              } 
+            this_awe.settings.update({
+              data: {
+                value: device_type
+              },
+              where: {
+                id: 'device_type'
+              }
             });
           }
           else {
@@ -1034,7 +1034,7 @@ function awe_v8() {
           }
           initialized = true;
         });
-      }; 
+      };
 
       this.constructor.prototype.detect_capabilities = function(done) {
         var io = {},
@@ -1047,13 +1047,13 @@ function awe_v8() {
             gyro : false,      // is orientation supported
             motion : false,    // is motion supported
             audio : false,    // is web audio supported
-            gum: false,        // is camera/microphone access supported 
+            gum: false,        // is camera/microphone access supported
             webgl: false,      // is webgl supported
             css3d: false,      // is css3d supported
             storage : false,  // is local storage supported
             sockets : false    // are web sockets supported
           };
-          
+
         var finished = function() {
           asynch_count--;
           if (asynch_count === 0) {
@@ -1067,7 +1067,7 @@ function awe_v8() {
             }
           }
         };
-        
+
         for (prop in defaults) {
           if (!io[prop]) {
             io[prop] = defaults[prop];
@@ -1143,7 +1143,7 @@ function awe_v8() {
           io.gum = true;
         }
 
-        // web audio enabled 
+        // web audio enabled
         if (!!window.AudioContext) {
           _audio_context = new AudioContext();
         }
@@ -1159,7 +1159,7 @@ function awe_v8() {
         if (!!document.createElement('canvas').getContext('experimental-webgl') || !!document.createElement('canvas').getContext('webgl')) {
           io.webgl = true;
         }
-        
+
         var tmp_div = document.createElement('div');
         if (tmp_div.style.WebkitTransformStyle) {
           tmp_div.style.WebkitTransformStyle = 'preserve-3d';
@@ -1183,11 +1183,11 @@ function awe_v8() {
         if (!!window.WebSocket || !!window.MozWebSocket || !!window.WebkitWebSocket || !!window.OWebSocket || !!window.msWebSocket || !!window.KhtmlWebSocket) {
           io.sockets = true;
         }
-        
+
         finished();
       };
 
-      this.constructor.prototype.device_type = function() { 
+      this.constructor.prototype.device_type = function() {
         var device_type;
         try {
           device_type = this.settings.view('device_type');
@@ -1202,7 +1202,7 @@ function awe_v8() {
 
       return this;
     };
-    
+
     function _reset_load_file_queue() {
       return {
         error_called: false,
@@ -1240,12 +1240,12 @@ function awe_v8() {
                 }
                 else {
                   _load_file(
-                    'script', 
+                    'script',
                     { src: io[obj].files },
                     io[obj].success,
                     io[obj].error
                   );
-                } 
+                }
                 break;
               }
             }
@@ -1277,8 +1277,8 @@ function awe_v8() {
               var file = _load_file_queue.queue[0][f];
               _load_file_queue.status[file] = 0
               _load_file(
-                'script', 
-                { src: file }, 
+                'script',
+                { src: file },
                 function(e) {
                   var file = this.getAttribute("src");
                   _load_file_queue.status[file] = 1;
@@ -1298,7 +1298,7 @@ function awe_v8() {
             _load_file_queue.queue.splice(0, 1);
             _load_file_queue.status[file] = 0;
             _load_file(
-              'script', 
+              'script',
               { src: file },
               function(e) {
                 var file = this.getAttribute("src");
@@ -1367,10 +1367,10 @@ function awe_v8() {
       }
       catch(e) { /* TODO */ };
     }
-    
-    var _get_user_media = undefined, 
+
+    var _get_user_media = undefined,
       _connect_stream_to_src = function() {};
-    
+
     if (navigator.getUserMedia) { // WebRTC 1.0 standard compliant browser
       _get_user_media = navigator.getUserMedia.bind(navigator);
       _connect_stream_to_src = function(media_stream, media_element) {
@@ -1388,7 +1388,7 @@ function awe_v8() {
     else if (navigator.webkitGetUserMedia) { // early webkit webrtc implementation
       _get_user_media = navigator.webkitGetUserMedia.bind(navigator);
       _connect_stream_to_src = function(media_stream, media_element) {
-        media_element.src = webkitURL.createObjectURL(media_stream);
+        media_element.src = URL.createObjectURL(media_stream);
         media_element.play();
       };
     }
@@ -1399,24 +1399,24 @@ function awe_v8() {
         keys[list_of_keys[key]] = 1;
       }
       for (var key in object) {
-        if (!keys[key]) { 
+        if (!keys[key]) {
           delete object[key];
         }
       }
       return object;
     }
-    
+
     var util = {
       require: _require,
       get_user_media: _get_user_media,
       connect_stream_to_src: _connect_stream_to_src,
-      clean_object: _clean_object, 
+      clean_object: _clean_object,
     };
-    
-    window.awe = new awe(); 
+
+    window.awe = new awe();
     this_awe = window.awe;
     this_awe.util = util;
-    
+
     this_awe.AUTO_DETECT_DEVICE_TYPE = true;
   }
 })(window);

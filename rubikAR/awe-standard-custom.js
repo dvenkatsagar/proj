@@ -245,7 +245,7 @@
         throw { code: 500, message: 'video streams not supported by this browser' };
       }
     }
-    
+
     this_awe.constructor.prototype.video_streams.delete = function(BODY, HEAD) {
       if (this_awe.capabilities.view('gum')) {
         if (!BODY) { BODY = {}; }
@@ -616,7 +616,6 @@
               _clickable_objects.push(BODY.mesh);
               this_awe.projections.update({ data:{ _clickable_object_id:_clickable_id }, where:{ id:BODY.id } });
               this_awe.scene_needs_rendering = 1;
-              this_awe.scene_needs_rendering = 1;
               var event = new CustomEvent('projection_loaded', { detail: BODY.id });
               window.dispatchEvent(event);
             });
@@ -900,8 +899,10 @@
       if (!BODY.overdraw) {
         BODY.overdraw = true;
       }
-      var material = new THREE.MeshBasicMaterial(BODY);
       switch(type) {
+        case 'basic':
+          material = new THREE.MeshBasicMaterial(BODY);  
+          break;
         case 'phong':
           if (!BODY.shading) {
             BODY.shading = THREE.SmoothShading;
@@ -919,6 +920,9 @@
           break;
         case 'sprite_canvas':
           material = new THREE.SpriteCanvasMaterial(BODY);
+          break;
+        case 'custom':
+          material = BODY.custom;
           break;
       }
       material.side = side;

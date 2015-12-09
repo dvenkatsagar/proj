@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>AWE Marker AR demo</title>
+<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
+<meta charset="utf-8"/>
+<style type="text/css">
+* {
+	margin: 0;
+	padding: 0;
+}
+#container {
+	position: absolute;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	overflow: hidden;
+}
+</style>
+</head>
+<body>
+<div id="container"></div>
+<script type="text/javascript" src="awe-loader.js"></script>
+<script type="text/javascript">
+  window.addEventListener('load', function() {
+    window.awe.init({
+      device_type: awe.AUTO_DETECT_DEVICE_TYPE,
+      settings: {
+				debug: true,
+      	container_id: 'container',
+        default_camera_position: { x:0, y:0, z:0 },
+        default_lights:[
+          {
+            id: 'point_light',
+            type: 'point',
+            color: 0xFFFFFF,
+          },
+        ],
+      },
+      ready: function() {
+        awe.util.require([
+          {
+            capabilities: ['gum','webgl'],
+            files: [
+              [ 'awe-standard-dependencies.js', 'awe-standard-custom.js'],
+              'awe-jsartoolkit-dependencies.js',
+              'awe.marker_ar.js',
+            ],
+            success: function() {
+							awe.setup_scene();
+							var faces = {up: [], down: [], left: [], right:[], front:[], back:[]};
+							awe.pois.add({ id:'poi_0', position: { x:0, y:0, z:10000 }, visible: false });
+
+							/* order to add materials: x+,x-,y+,y-,z+,z-*/
+							// [0xeeeeee,0xeeeeee,0xeeeeee,0xeeeeee,0xeeeeee,0xeeeeee]
+							var colors = {
+								//corners
+								cubit_0 : [0xeeeeee,0xffa500,0xeeeeee,0xffff00,0xeeeeee,0x0000ff],
+ 							 	cubit_2 : [0xff0000,0xeeeeee,0xeeeeee,0xffff00,0xeeeeee,0x0000ff],
+ 							 	cubit_6 : [0xeeeeee,0xffa500,0xffffff,0xeeeeee,0xeeeeee,0x0000ff],
+								cubit_8 : [0xff0000,0xeeeeee,0xffffff,0xeeeeee,0xeeeeee,0x0000ff],
+								cubit_18 : [0xeeeeee,0xffa500,0xeeeeee,0xffff00,0x00ff00,0xeeeeee],
+								cubit_20 : [0xff0000,0xeeeeee,0xeeeeee,0xffff00,0x00ff00,0xeeeeee],
+								cubit_24 : [0xeeeeee,0xffa500,0xffffff,0xeeeeee,0x00ff00,0xeeeeee],
+								cubit_26 : [0xff0000,0xeeeeee,0xffffff,0xeeeeee,0x00ff00,0xeeeeee],
+
+								//mid-edges
+								cubit_1 : [0xeeeeee,0xeeeeee,0xeeeeee,0xffff00,0xeeeeee,0x0000ff],
+								cubit_3 : [0xeeeeee,0xffa500,0xeeeeee,0xeeeeee,0xeeeeee,0x0000ff],
+								cubit_5 : [0xff0000,0xeeeeee,0xeeeeee,0xeeeeee,0xeeeeee,0x0000ff],
+								cubit_7 : [0xeeeeee,0xeeeeee,0xffffff,0xeeeeee,0xeeeeee,0x0000ff],
+								cubit_9 : [0xeeeeee,0xffa500,0xeeeeee,0xffff00,0xeeeeee,0xeeeeee],
+								cubit_11 : [0xff0000,0xeeeeee,0xeeeeee,0xffff00,0xeeeeee,0xeeeeee],
+								cubit_15 : [0xeeeeee,0xffa500,0xffffff,0xeeeeee,0xeeeeee,0xeeeeee],
+								cubit_17 : [0xff0000,0xeeeeee,0xffffff,0xeeeeee,0xeeeeee,0xeeeeee],
+								cubit_19 : [0xeeeeee,0xeeeeee,0xeeeeee,0xffff00,0x00ff00,0xeeeeee],
+								cubit_21 : [0xeeeeee,0xffa500,0xeeeeee,0xeeeeee,0x00ff00,0xeeeeee],
+								cubit_23 : [0xff0000,0xeeeeee,0xeeeeee,0xeeeeee,0x00ff00,0xeeeeee],
+								cubit_25 : [0xeeeeee,0xeeeeee,0xffffff,0xeeeeee,0x00ff00,0xeeeeee],
+
+								//mid-points
+								cubit_4 : [0xeeeeee,0xeeeeee,0xeeeeee,0xeeeeee,0xeeeeee,0x0000ff],
+								cubit_10 : [0xeeeeee,0xeeeeee,0xeeeeee,0xffff00,0xeeeeee,0xeeeeee],
+								cubit_12 : [0xeeeeee,0xffa500,0xeeeeee,0xeeeeee,0xeeeeee,0xeeeeee],
+								cubit_14 : [0xff0000,0xeeeeee,0xeeeeee,0xeeeeee,0xeeeeee,0xeeeeee],
+								cubit_16 : [0xeeeeee,0xeeeeee,0xffffff,0xeeeeee,0xeeeeee,0xeeeeee],
+								cubit_22 : [0xeeeeee,0xeeeeee,0xeeeeee,0xeeeeee,0x00ff00,0xeeeeee],
+
+								//core
+								cubit_13 : [0xeeeeee,0xeeeeee,0xeeeeee,0xeeeeee,0xeeeeee,0xeeeeee]
+							};
+							var materialArrays = {};
+							var materials = {};
+							for (var i=0; i < 27; i++){
+								materialArrays['cubit_'+i] = [];
+								materials['cubit_'+i] = null;
+								for (var j=0; j < 6;j++){
+									awe.materials.add({id:'cubit_'+i+'_face_'+j,type: 'phong', color: colors['cubit_'+i][j]});
+									materialArrays['cubit_'+i].push(awe.materials.view('cubit_'+i+'_face_'+j));
+									materials['cubit_'+i] = new THREE.MeshFaceMaterial(materialArrays['cubit_'+i]);
+								}
+							}
+							console.log(materials['cubit_26']);
+							var cubeIndex = 0;
+							for (var k = -1; k <= 1; k++){
+								for (var j = -1; j <= 1; j++){
+									for(var i = -1; i <= 1; i++){
+										awe.projections.add({
+											id:'cubit_'+cubeIndex,
+											geometry: { shape: 'cube', x:20, y:20, z:20 },
+											position: { x:i*25, y: (j*25)+25, z:k*25 },
+											material: { type: 'custom', custom: materials['cubit_'+cubeIndex] }
+											//material:{ type: 'phong', color: 0xFFFFFF },
+											//texture: { path: 'awe_by_buildAR.png' },
+										}, { poi_id: 'poi_0'});
+										cubeIndex++;
+									}
+								}
+							}
+
+							//var projection = awe.projections.view('cubit_0');
+
+			        awe.events.add([{
+								id: 'ar_tracking_marker',
+								device_types: {
+									pc: 1,
+									android: 1
+								},
+								register: function(handler) {
+									window.addEventListener('ar_tracking_marker', handler, false);
+								},
+								unregister: function(handler) {
+									window.removeEventListener('ar_tracking_marker', handler, false);
+								},
+								handler: function(event) {
+									if (event.detail) {
+										if (event.detail['64']) { // we are mapping marker #64 to this projection
+											awe.pois.update({
+												data: {
+													visible: true,
+                          position: { x:0, y:0, z:0 },
+													matrix: event.detail['64'].transform
+												},
+												where: {
+													id: 'poi_0'
+												}
+											});
+
+
+										}
+										else {
+											awe.pois.update({
+												data: {
+													visible: false
+												},
+												where: {
+													id: 'poi_0'
+												}
+											});
+										}
+										awe.scene_needs_rendering = 1;
+									}
+								}
+							}])
+			      },
+          },
+          {
+            capabilities: [],
+            success: function() {
+		          document.body.innerHTML = '<p>Try this demo in the latest version of Chrome or Firefox on a PC or Android device</p>';
+            },
+          },
+        ]);
+      }
+    });
+  });
+</script>
+</body>
+</html>
