@@ -85,7 +85,8 @@ THREEx.WebcamGrabbing = function(){
           for (var i = 0; i != devices.length; ++i) {
                   var sourceInfo = devices[i];
                   console.log(devices[i].kind + ": " + devices[i].label + " id = " + devices[i].deviceId +" facing = " + devices[i].facing);
-                  if(sourceInfo.kind == "video" && sourceInfo.label.indexOf("facing back") != -1) {
+                  if(sourceInfo.kind == "video" && sourceInfo.label.indexOf("facing back") > -1) {
+                        console.log("using back camera");
                           constraints.video = {
                                   optional: [{sourceId: sourceInfo.id}]
                           }
