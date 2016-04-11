@@ -84,8 +84,9 @@ THREEx.WebcamGrabbing = function(){
           }
           for (var i = 0; i != devices.length; ++i) {
                   var sourceInfo = devices[i];
-                  console.log(devices[i].kind + ": " + devices[i].label + " id = " + devices[i].deviceId +" facing = " + devices[i].facing);
-                  if(sourceInfo.kind == "videoinput" && sourceInfo.facing == "environment") {
+                  //console.log(devices[i].kind + ": " + devices[i].label + " id = " + devices[i].deviceId +" facing = " + devices[i].facing);
+                  console.log(devices[i])
+                  if(sourceInfo.kind == "videoinput") {
                           constraints.video = {
                                   facingMode: "environment"
                           }
