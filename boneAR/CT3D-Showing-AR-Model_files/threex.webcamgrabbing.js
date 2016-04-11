@@ -85,10 +85,10 @@ THREEx.WebcamGrabbing = function(){
           for (var i = 0; i != devices.length; ++i) {
                   var sourceInfo = devices[i];
                   console.log(devices[i].kind + ": " + devices[i].label + " id = " + devices[i].deviceId +" facing = " + devices[i].facing);
-                  if(sourceInfo.kind == "videoinput" && sourceInfo.label.indexOf("facing front") > -1) {
-                        console.log("using font camera");
+                  if(sourceInfo.kind == "videoinput" && sourceInfo.label.indexOf("facing back") > -1) {
+                        console.log("using back camera");
                           constraints.video = {
-                                  optional: [{sourceId: sourceInfo.id}]
+                                  deviceId: {exact: sourceInfo.id}
                           }
                           // not to mirror the video element when it is 'environment'
                           // domElement.style.transform   = ''
